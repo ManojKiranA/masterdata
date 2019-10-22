@@ -1,0 +1,37 @@
+{
+    "name": "manojkiran/masterdata",
+    "description": "All in one Master Data Management for Laravel Applications",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "manojkiran.a",
+            "email": "manojkiran10031998@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "illuminate/database": "^5.8|^6.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^3.8|^4.0",
+        "phpunit/phpunit": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Manojkiran\\MasterData\\":"src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Manojkiran\\MasterData\\Tests\\":"tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Manojkiran\\MasterData\\MasterDataServiceProvider"
+            ]
+        }
+    }
+}
