@@ -2,8 +2,6 @@
 
 namespace Manojkiran\MasterData\Tests;
 
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Config;
 use Manojkiran\MasterData\Models\MasterData;
 
 class MasterDataSequenceTest extends BaseTestCase
@@ -416,20 +414,19 @@ class MasterDataSequenceTest extends BaseTestCase
 
     private $defaultBulkDataDifferentTypesUnsetted;
 
-    
-
     public function setUp(): void
     {
         $arrayKeyToUnset = 'sub_constant_sequence';
 
-        $callback = function($eachArray) use ($arrayKeyToUnset){
+        $callback = function ($eachArray) use ($arrayKeyToUnset) {
             unset($eachArray[$arrayKeyToUnset]);
+
             return $eachArray;
         };
 
-        $this->defaultBulkDataUnsetted = array_map($callback,$this->defaultBulkData);
+        $this->defaultBulkDataUnsetted = array_map($callback, $this->defaultBulkData);
 
-        $this->defaultBulkDataDifferentTypesUnsetted = array_map($callback,$this->defaultBulkDataDifferentTypes);
+        $this->defaultBulkDataDifferentTypesUnsetted = array_map($callback, $this->defaultBulkDataDifferentTypes);
 
         parent::setUp();
     }
@@ -443,7 +440,7 @@ class MasterDataSequenceTest extends BaseTestCase
 
         $allMasterDataOfSingleType = MasterData::query()->pluck('sub_constant_sequence');
 
-        $this->assertSame(range(1,$allMasterDataOfSingleType->count()),$allMasterDataOfSingleType->toArray());
+        $this->assertSame(range(1, $allMasterDataOfSingleType->count()), $allMasterDataOfSingleType->toArray());
     }
 
     /** @test */
@@ -456,11 +453,11 @@ class MasterDataSequenceTest extends BaseTestCase
         endforeach;
 
         MasterData::query()
-                        ->select(['main_constant_name','sub_constant_sequence'])
+                        ->select(['main_constant_name', 'sub_constant_sequence'])
                         ->get()
                         ->groupBy('main_constant_name')
-                        ->map(function($eachCollction){
-                            $this->assertSame(range(1,$eachCollction->count()),$eachCollction->pluck('sub_constant_sequence')->toArray());
+                        ->map(function ($eachCollction) {
+                            $this->assertSame(range(1, $eachCollction->count()), $eachCollction->pluck('sub_constant_sequence')->toArray());
                         });
     }
 }

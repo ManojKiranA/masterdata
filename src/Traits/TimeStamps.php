@@ -12,8 +12,8 @@ trait TimeStamps
      * @return void
      */
     public static function bootTimeStamps()
-	{
-		static::creating(function (Model $model) {
+    {
+        static::creating(function (Model $model) {
             $createdAtColumn = $model::CREATED_AT;
             $model->$createdAtColumn = now();
             $model->constant_status = 'ACTIVE';
@@ -23,5 +23,5 @@ trait TimeStamps
             $updatedAtColumn = $model::UPDATED_AT;
             $model->$updatedAtColumn = now();
         });
-	}
+    }
 }

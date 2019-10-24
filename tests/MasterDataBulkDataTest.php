@@ -408,9 +408,9 @@ class MasterDataBulkDataTest extends BaseTestCase
     public function isGettingOnlyActiveRecords()
     {
         $shuffled = $this->masterData->shuffle();
-        $sliced = $shuffled->slice(2,2);
+        $sliced = $shuffled->slice(2, 2);
         $inactive = $sliced->map->markAsInActive();
-        $this->assertEquals(MasterData::active()->count(),count($this->defaultBulkData) - $inactive->count());
+        $this->assertEquals(MasterData::active()->count(), count($this->defaultBulkData) - $inactive->count());
     }
 
     /** @test */
@@ -418,9 +418,9 @@ class MasterDataBulkDataTest extends BaseTestCase
     {
         $this->masterData->map->markAsActive();
         $shuffled = $this->masterData->shuffle();
-        $sliced = $shuffled->slice(2,2);
+        $sliced = $shuffled->slice(2, 2);
         $inactive = $sliced->map->markAsInActive();
-        $this->assertEquals(MasterData::inActive()->count(),$inactive->count());
+        $this->assertEquals(MasterData::inActive()->count(), $inactive->count());
     }
 
     /** @test */
@@ -431,11 +431,10 @@ class MasterDataBulkDataTest extends BaseTestCase
                         ->map
                         ->count()
                         ->toArray();
-                        
-        foreach ($arrayGroupsWithCount as $groupName => $groupCount):
-            $this->assertEquals($groupCount,MasterData::query()->ofConstantType($groupName)->count());
-        endforeach;
 
+        foreach ($arrayGroupsWithCount as $groupName => $groupCount):
+            $this->assertEquals($groupCount, MasterData::query()->ofConstantType($groupName)->count());
+        endforeach;
     }
 
     /** @test */
@@ -445,15 +444,14 @@ class MasterDataBulkDataTest extends BaseTestCase
                         ->groupBy('main_constant_name')
                         ->map
                         ->count()
-                        ->chunk(rand(2,5))
+                        ->chunk(rand(2, 5))
                         ->toArray();
-               
+
         foreach ($arrayGroupsWithCount as  $eachGrouped):
             $eachGroupedCollection = (new Collection($eachGrouped));
-            $types = $eachGroupedCollection->keys()->toArray();
-            $typesCountSum = $eachGroupedCollection->values()->sum();
-            $this->assertEquals($typesCountSum,MasterData::query()->ofConstantTypes($types)->count());
+        $types = $eachGroupedCollection->keys()->toArray();
+        $typesCountSum = $eachGroupedCollection->values()->sum();
+        $this->assertEquals($typesCountSum, MasterData::query()->ofConstantTypes($types)->count());
         endforeach;
-           
     }
 }
