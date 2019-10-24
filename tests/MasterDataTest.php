@@ -2,8 +2,8 @@
 
 namespace Manojkiran\MasterData\Tests;
 
-use Manojkiran\MasterData\Enums\MasterDataStatus;
 use Manojkiran\MasterData\Models\MasterData;
+use Manojkiran\MasterData\Enums\MasterDataStatus;
 
 class MasterDataTest extends BaseTestCase
 {
@@ -21,7 +21,7 @@ class MasterDataTest extends BaseTestCase
     public function setUp(): void
     {
         parent::setUp();
-        
+
         $this->masterData = MasterData::create($this->defaultSingleData);
     }
 
@@ -68,8 +68,8 @@ class MasterDataTest extends BaseTestCase
     public function theSoftDeletedRecordCanBeRestored()
     {
         $this->masterData = MasterData::withTrashed()->first();
-        
-        $this->assertSame(1,$this->masterData->id);
+
+        $this->assertSame(1, $this->masterData->id);
     }
 
     /** @test */
@@ -83,7 +83,7 @@ class MasterDataTest extends BaseTestCase
         ];
 
         $this->masterData->update($data);
-        
-        $this->assertSame($data['sub_constant_name'],$this->masterData->sub_constant_name);
+
+        $this->assertSame($data['sub_constant_name'], $this->masterData->sub_constant_name);
     }
 }

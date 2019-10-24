@@ -12,18 +12,16 @@
 namespace Manojkiran\MasterData\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Manojkiran\MasterData\Traits\Sequence;
+use Manojkiran\MasterData\Traits\TimeStamps;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Manojkiran\MasterData\Enums\MasterDataStatus;
 use Manojkiran\MasterData\Queries\MasterDataQueryBuilder;
-use Manojkiran\MasterData\Traits\Sequence;
-use Manojkiran\MasterData\Traits\TimeStamps;
 
 class MasterData extends Model
 {
     use SoftDeletes;
-
     use TimeStamps;
-
     use Sequence;
 
     /**
@@ -35,7 +33,7 @@ class MasterData extends Model
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        
+
         $this->setTable(config('masterdata.table_name'));
     }
 
@@ -44,7 +42,7 @@ class MasterData extends Model
      *
      * @var array
      */
-    protected $fillable = ['main_constant_name','sub_constant_name','sub_constant_value','sub_constant_sequence','constant_status'];
+    protected $fillable = ['main_constant_name', 'sub_constant_name', 'sub_constant_value', 'sub_constant_sequence', 'constant_status'];
 
     /**
      * Begin querying the model.
@@ -68,7 +66,7 @@ class MasterData extends Model
     }
 
     /**
-     * Switch the Status of Models
+     * Switch the Status of Models.
      *
      *
      * @param string  $status
@@ -80,7 +78,7 @@ class MasterData extends Model
     }
 
     /**
-     * Marks the Model as Active
+     * Marks the Model as Active.
      *
      *
      * @return $this
@@ -91,7 +89,7 @@ class MasterData extends Model
     }
 
     /**
-     * Marks the Model as Inactive
+     * Marks the Model as Inactive.
      *
      *
      * @return $this

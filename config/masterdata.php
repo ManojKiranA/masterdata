@@ -25,9 +25,9 @@ return [
 
     /*
      * While we are Storing the Data we can also Set to Custom Order
-     * of Sub Constant To Enable the auto Sequence only if the Order is 
+     * of Sub Constant To Enable the auto Sequence only if the Order is
      * is Not found in the Creation Array
-     * 
+     *
      * Note: You Must set 'enable_auto_sequence' to true for using this future
      */
     'enable_auto_sequence_only_if_not_set' => true,

@@ -2,8 +2,8 @@
 
 namespace Manojkiran\MasterData\Tests;
 
-use Manojkiran\MasterData\MasterDataServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
+use Manojkiran\MasterData\MasterDataServiceProvider;
 
 abstract class BaseTestCase extends Orchestra
 {
@@ -53,6 +53,4 @@ abstract class BaseTestCase extends Orchestra
 
         (new \CreateMasterDataTable())->up();
     }
-    
-    
 }

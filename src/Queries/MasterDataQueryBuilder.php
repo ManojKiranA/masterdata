@@ -17,21 +17,21 @@ use Manojkiran\MasterData\Enums\MasterDataStatus;
 class MasterDataQueryBuilder extends Builder
 {
     /**
-     * Applies the Filter Based on Status
-     * 
+     * Applies the Filter Based on Status.
+     *
      * @param  string $status
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function filter($status)
     {
-        $this->where('constant_status','=',$status);
+        $this->where('constant_status', '=', $status);
 
         return $this;
     }
 
     /**
-     * Get only the Record with Active Status
-     * 
+     * Get only the Record with Active Status.
+     *
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function active()
@@ -42,38 +42,38 @@ class MasterDataQueryBuilder extends Builder
     }
 
     /**
-     * Get only the Record with Inactive Status
-     * 
+     * Get only the Record with Inactive Status.
+     *
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function inActive()
     {
         $this->filter(MasterDataStatus::INACTIVE);
-        
+
         return $this;
     }
 
     /**
-     * Get only the Record which has Specific Constant Type
-     * 
+     * Get only the Record which has Specific Constant Type.
+     *
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function ofConstantType($constantType)
     {
-        $this->where('main_constant_name','=',$constantType);
-        
+        $this->where('main_constant_name', '=', $constantType);
+
         return $this;
     }
 
     /**
-     * Get only the Record which has Specific Constant Type
-     * 
+     * Get only the Record which has Specific Constant Type.
+     *
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function ofConstantTypes(array $constantType)
     {
-        $this->whereIn('main_constant_name',$constantType);
-        
+        $this->whereIn('main_constant_name', $constantType);
+
         return $this;
     }
 }
