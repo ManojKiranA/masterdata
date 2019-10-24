@@ -3,12 +3,41 @@
 namespace Manojkiran\MasterData\Tests;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Config;
 use Manojkiran\MasterData\Models\MasterData;
 
 class MasterDataSequenceTest extends BaseTestCase
 {
     /** @var array */
     private $defaultBulkData = [
+        [
+            'main_constant_name' =>'BillingPeriod',
+            'sub_constant_name' =>'Monthly',
+            'sub_constant_value' =>'1',
+            'sub_constant_sequence' =>1,
+            ],
+            [
+            'main_constant_name' =>'BillingPeriod',
+            'sub_constant_name' =>'Quarterly',
+            'sub_constant_value' =>'4',
+            'sub_constant_sequence' =>2,
+            ],
+            [
+            'main_constant_name' =>'BillingPeriod',
+            'sub_constant_name' =>'Half Yearly',
+            'sub_constant_value' =>'6',
+            'sub_constant_sequence' =>3,
+            ],
+            [
+            'main_constant_name' =>'BillingPeriod',
+            'sub_constant_name' =>'Yearly',
+            'sub_constant_value' =>'12',
+            'sub_constant_sequence' =>4,
+            ],
+    ];
+
+    /** @var array */
+    private $defaultBulkDataDifferentTypes = [
         [
             'main_constant_name' =>'BillingPeriod',
             'sub_constant_name' =>'Monthly',
@@ -383,19 +412,55 @@ class MasterDataSequenceTest extends BaseTestCase
             ],
     ];
 
-    /** @var \Manojkiran\MasterData\Models\MasterData */
-    private $masterData;
+    private $defaultBulkDataUnsetted;
+
+    private $defaultBulkDataDifferentTypesUnsetted;
+
+    
 
     public function setUp(): void
     {
+        $arrayKeyToUnset = 'sub_constant_sequence';
+
+        $callback = function($eachArray) use ($arrayKeyToUnset){
+            unset($eachArray[$arrayKeyToUnset]);
+            return $eachArray;
+        };
+
+        $this->defaultBulkDataUnsetted = array_map($callback,$this->defaultBulkData);
+
+        $this->defaultBulkDataDifferentTypesUnsetted = array_map($callback,$this->defaultBulkDataDifferentTypes);
+
         parent::setUp();
     }
 
     /** @test */
-    public function defaultDataCountMatchesWithCreatedModel()
+    public function itCreatestheSequenceOfSingleType()
     {
-        $this->assertTrue(true);
+        foreach ($this->defaultBulkDataUnsetted as $eachData):
+            MasterData::create($eachData);
+        endforeach;
+
+        $allMasterDataOfSingleType = MasterData::query()->pluck('sub_constant_sequence');
+
+        $this->assertSame(range(1,$allMasterDataOfSingleType->count()),$allMasterDataOfSingleType->toArray());
     }
 
+    /** @test */
+    public function itCreatestheSequenceOfMultipleTypes()
+    {
+        shuffle($this->defaultBulkDataDifferentTypesUnsetted);
 
+        foreach ($this->defaultBulkDataDifferentTypesUnsetted as $eachData):
+            MasterData::create($eachData);
+        endforeach;
+
+        MasterData::query()
+                        ->select(['main_constant_name','sub_constant_sequence'])
+                        ->get()
+                        ->groupBy('main_constant_name')
+                        ->map(function($eachCollction){
+                            $this->assertSame(range(1,$eachCollction->count()),$eachCollction->pluck('sub_constant_sequence')->toArray());
+                        });
+    }
 }
